@@ -149,6 +149,31 @@ def numero_hex2bin(numero_hex):
     return numero_binario
 
 
+# ---------------------------------------------------------
+# Implementa una cola FIFO básica
+# ---------------------------------------------------------
+class Cola:
+    def __init__(self,numero_elementos):
+        self.numero_elementos = numero_elementos
+        self.cola             = nn.zeros(self.numero_elementos)
+
+    def insertarFinal(self, nuevo):
+        for i in range(self.numero_elementos-1):
+            self.cola[i] = self.cola[i+1]
+
+        self.cola[self.numero_elementos-1] = nuevo
+
+    def moverAlFinal(self, elemento):
+        for i in range(self.numero_elementos - 1):
+            if self.cola[i] == elemento:
+                j = i
+                while j < self.numero_elementos - 1:
+                    self.cola[j]  = self.cola[j+1]
+                    j            += 1
+        self.cola[self.numero_elementos - 1] = elemento
+
+    def primero(self):
+        return self.cola[0]
 # ------------------------------------------------------
 # Implementacion de un bloque de la cache
 # Puede tener más de una palabra
@@ -208,8 +233,8 @@ class ConjuntoCache:
         self.numero_bloques         = numero_bloques
         self.numero_palabras_bloque = numero_palabras_bloque
         self.bloques                = []
-        self.vtiempo                = nn.zeros(self.numero_bloques)
-        self.numero_bits_bloque     = int(math.log(self.numero_bloques,2))
+        self.cola                   = Cola(self.numero_bloques)
+        self.numero_bits_bloque     = int(math.log(self.numero_bloques, 2))
 
         # Se inicializa con numero_bloques bloques vacios (con el bit de validez a 0)
         for i in range(self.numero_bloques):
@@ -229,12 +254,9 @@ class ConjuntoCache:
             acierto, datos  = self.bloques[i].leer(etiqueta)
             i              += 1
 
-        # Si hay acierto actualiza vtiempo incrementando en 1 el resto
-        # El actual es el i-1
-        if acierto == 1:
-            for j in range(self.numero_bloques):
-                if j != i - 1:
-                    self.vtiempo[j] += 1
+        # Si hay acierto actualiza la Cola
+        if acierto:
+            self.cola.moverAlFinal(i-1)
 
         return acierto, datos
 
@@ -251,13 +273,15 @@ class ConjuntoCache:
         if i < self.numero_bloques:
             # Escribir en el primer bloque vacio (el i)
             self.bloques[i].escribir(etiqueta, datos)
+            self.cola.insertarFinal(i)
         else:
             # Como están todos ocupados, se reemplaza por el que hace más tiempo que no ha sido accedido
-            # Será el máximo en vtiempo
-            posicion_a_reemplazar = nn.argmax(self.vtiempo)
+            # Será el primero en la cola
+            # El que se insertá será ahora el último
+            posicion_a_reemplazar = int(self.cola.primero())
+            self.cola.insertarFinal(posicion_a_reemplazar)
             self.bloques[posicion_a_reemplazar].escribir(etiqueta, datos)
-            self.vtiempo[posicion_a_reemplazar] = 0
-            print(">>> Se reemplaza el bloque " + dec2bin(posicion_a_reemplazar,self.numero_bits_bloque))
+            print(">>> Se reemplaza el bloque " + dec2bin(posicion_a_reemplazar, self.numero_bits_bloque))
 
 
 # ----------------------------------------
@@ -598,7 +622,8 @@ def ProbarMemoriaCache(numero_conjuntos, numero_bloques_conjunto, numero_palabra
 
     sistema_memoria.mostrarMemoriaCache()
 
-    vlectura = ["00000010", "00000014", "00000000", "00000020"]
+#    vlectura = ["00000010", "00000014", "00000000", "00000020"]
+    vlectura = ["00000000", "00000010", "00000008", "0000001C"]
 
     for direccion in vlectura:
         print("\nLECTURA dirección -> 0x" + direccion)
@@ -626,8 +651,8 @@ if __name__ == "__main__":
     print("--------------------------------------------------------------------")
 
     # Correspondencia directa con tamaño de bloque == 1
-    numero_conjuntos        = 1
-    numero_bloques_conjunto = 4
+    numero_conjuntos        = 4
+    numero_bloques_conjunto = 1
     numero_palabras_bloque  = 1
     ProbarMemoriaCache(numero_conjuntos, numero_bloques_conjunto, numero_palabras_bloque)
 
