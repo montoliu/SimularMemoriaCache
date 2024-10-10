@@ -1,6 +1,4 @@
 .idea/
 .DS_Store
 __pycache__
-*.xml
-.idea/dictionaries/montoliu.xml
-.idea/inspectionProfiles/Project_Default.xml
+

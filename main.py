@@ -38,39 +38,39 @@ if __name__ == "__main__":
     print("--------------------------------------------------------------------")
 
     # Correspondencia directa con tamaño de bloque == 1
-    # numero_conjuntos = 4
-    # numero_bloques_conjunto = 1
-    # numero_palabras_bloque = 1
-    # probar_memoria_cache(numero_conjuntos, numero_bloques_conjunto, numero_palabras_bloque)
-
-    # Correspondencia directa con tamaño de bloque > 1
     numero_conjuntos = 4
     numero_bloques_conjunto = 1
-    numero_palabras_bloque = 2
+    numero_palabras_bloque = 1
     probar_memoria_cache(numero_conjuntos, numero_bloques_conjunto, numero_palabras_bloque)
-    #
+
+    # # Correspondencia directa con tamaño de bloque > 1
+    # numero_conjuntos = 4
+    # numero_bloques_conjunto = 1
+    # numero_palabras_bloque = 2
+    # probar_memoria_cache(numero_conjuntos, numero_bloques_conjunto, numero_palabras_bloque)
+
     # # Totalmente asociativa con tamaño de bloque == 1
     # numero_conjuntos = 1
     # numero_bloques_conjunto = 4
     # numero_palabras_bloque = 1
     # probar_memoria_cache(numero_conjuntos, numero_bloques_conjunto, numero_palabras_bloque)
-    #
+
     # # Totalmente asociativa con tamaño de bloque > 1
     # numero_conjuntos = 1
     # numero_bloques_conjunto = 4
     # numero_palabras_bloque = 2
     # probar_memoria_cache(numero_conjuntos, numero_bloques_conjunto, numero_palabras_bloque)
-    #
+
     # # Asociativa con tamaño de bloque == 1
     # numero_conjuntos = 8
     # numero_bloques_conjunto = 4
     # numero_palabras_bloque = 1
     # probar_memoria_cache(numero_conjuntos, numero_bloques_conjunto, numero_palabras_bloque)
-    #
+
     # # Asociativa con tamaño de bloque > 1
     # numero_conjuntos = 8
     # numero_bloques_conjunto = 4
     # numero_palabras_bloque = 2
     # probar_memoria_cache(numero_conjuntos, numero_bloques_conjunto, numero_palabras_bloque)
-    #
+    
 

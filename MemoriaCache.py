@@ -135,9 +135,12 @@ class MemoriaCache:
         print("Los bits de la etiqueta son                   -> [" +
               str(self.bits_direccion - 1 - self.primer_bit_etiqueta) + ", " +
               str(self.bits_direccion - 1 - self.ultimo_bit_etiqueta) + "]")
-        print("Los bits del índice son                       -> [" +
-              str(self.bits_direccion - 1 - self.primer_bit_indice) + ", " +
-              str(self.bits_direccion - 1 - self.ultimo_bit_indice) + "]")
+        if self.numero_conjuntos == 1:
+            print("Los bits del índice son                       -> [-1,-1]")
+        else:
+            print("Los bits del índice son                       -> [" +
+                  str(self.bits_direccion - 1 - self.primer_bit_indice) + ", " +
+                  str(self.bits_direccion - 1 - self.ultimo_bit_indice) + "]")
         if self.numero_palabras_bloque == 1:
             print("Los bits de la posición dentro del bloque son -> [-1,-1]")
         else:

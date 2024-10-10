@@ -34,11 +34,11 @@ class MemoriaRam:
             vdatos.append(self.leer_palabra(direccion_hex))
         else:
             direccion_binario = numero_hex2bin(direccion_hex)
-            bits_final_prefijo = 32 - 2 - int(math.log(numero_palabras_bloque, 2))
+            bits_final_prefijo = self.numero_bits_direccion - int(math.log(numero_palabras_bloque, 2))
             prefijo_direccion = direccion_binario[0:bits_final_prefijo]
 
             for i in range(numero_palabras_bloque):
-                i_direccion_binario = prefijo_direccion + str(dec2bin(i, numero_bits_bloque)) + "00"
+                i_direccion_binario = prefijo_direccion + str(dec2bin(i, numero_bits_bloque))
                 i_direccion_hex = numero_bin2hex(i_direccion_binario)
                 vdatos.append(self.leer_palabra(i_direccion_hex))
 
